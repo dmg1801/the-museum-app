@@ -1,0 +1,17 @@
+.container {
+    text-align: center;
+}
+
+.center-image {
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+    /* Ajusta el valor según sea necesario para redondear más o menos */
+    overflow: hidden;
+    /* Asegura que la imagen respete el redondeo de los bordes */
+}
+
+.text-below {
+    margin-top: 2em;
+    font-size: 2em;
+}
