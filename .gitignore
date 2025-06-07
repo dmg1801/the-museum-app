@@ -1,0 +1,18 @@
+# Node modules
+**/node_modules
+
+# Logs
+**/*.log
+
+# Docker volumes
+postgres
+
+# Build
+**/dist
+
+# Vite dev cache
+frontend/.vite
+frontend/.vite-temp
+
+# Environments
+**/.env

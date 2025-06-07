@@ -1,0 +1,17 @@
+mapa-arqueologico/
+├── backend/         ← NestJS
+├── frontend/        ← React + Vite + TS + Bootstrap
+├── postgres/        ← Datos persistentes de Postgres
+├── docker-compose.yml
+└── README.md
+
+
+errores:
+
+1- Docker:
+- PROBLEMA:el módulo de frontend se iniciaba pero no pudía ver la aplicación en el navegador
+- SOLUCION: hacer npm install manualmente, y agregar una configación en el archvo "vite.config.ts"
+
+- PROBLEMA: el backend no se desplegaba en el navegador
+- SOLUCION: cambiar el puerto a 3001 (puero del docker) en el archivo "main.ts" del backend
+
