@@ -7,9 +7,14 @@ import {
   Delete,
   Put,
   NotFoundException,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ArtifactsService } from './artifacts.service';
 import { Artifact } from './artifact.entity';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 @Controller('artifacts')
 export class ArtifactsController {
@@ -44,4 +49,22 @@ export class ArtifactsController {
   remove(@Param('id') id: string): Promise<void> {
     return this.artifactsService.remove(+id);
   }
+
+  @Post('upload')
+@UseInterceptors(FileInterceptor('file', {
+  storage: diskStorage({
+    destination: './uploads',
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+      const ext = extname(file.originalname);
+      cb(null, `artifact-${uniqueSuffix}${ext}`);
+    }
+  })
+}))
+uploadImage(@UploadedFile() file: Express.Multer.File) {
+  return {
+    imageUrl: `http://localhost:3001/uploads/${file.filename}`,
+  };
+}
+
 }
