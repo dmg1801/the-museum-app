@@ -57,33 +57,27 @@ export default function AddArtifactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded bg-light">
-      <h4>Agregar nueva pieza</h4>
-
-      <div className="mb-3">
-        <label className="form-label">Nombre</label>
-        <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} required />
+  <form onSubmit={handleSubmit} className="p-3 border rounded bg-light mt-4">
+    <h5>Agregar nueva pieza arqueológica</h5>
+    <div className="row g-2">
+      <div className="col-md-2">
+        <input type="text" className="form-control" placeholder="Nombre" value={name} onChange={(e) => setName(e.target.value)} required />
       </div>
 
-      <div className="mb-3">
-        <label className="form-label">Descripción</label>
-        <textarea className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} required />
+      <div className="col-md-3">
+        <input type="text" className="form-control" placeholder="Descripción" value={description} onChange={(e) => setDescription(e.target.value)} required />
       </div>
 
-      <div className="row mb-3">
-        <div className="col">
-          <label className="form-label">Latitud</label>
-          <input type="number" className="form-control" value={latitude} onChange={(e) => setLatitude(e.target.value)} required />
-        </div>
-        <div className="col">
-          <label className="form-label">Longitud</label>
-          <input type="number" className="form-control" value={longitude} onChange={(e) => setLongitude(e.target.value)} required />
-        </div>
+      <div className="col-md-2">
+        <input type="number" className="form-control" placeholder="Latitud" value={latitude} onChange={(e) => setLatitude(e.target.value)} required />
       </div>
 
-      <div className="mb-3">
-        <label className="form-label">Fuente de imagen</label>
-        <div className="form-check">
+      <div className="col-md-2">
+        <input type="number" className="form-control" placeholder="Longitud" value={longitude} onChange={(e) => setLongitude(e.target.value)} required />
+      </div>
+
+      <div className="col-md-1 d-flex align-items-center">
+        <div className="form-check me-2">
           <input className="form-check-input" type="radio" checked={imageSource === 'url'} onChange={() => setImageSource('url')} />
           <label className="form-check-label">URL</label>
         </div>
@@ -93,21 +87,18 @@ export default function AddArtifactForm() {
         </div>
       </div>
 
-      {imageSource === 'url' ? (
-        <div className="mb-3">
-          <label className="form-label">Imagen (URL)</label>
-          <input type="url" className="form-control" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} required />
-        </div>
-      ) : (
-        <div className="mb-3">
-          <label className="form-label">Imagen (archivo)</label>
+      <div className="col-md-2">
+        {imageSource === 'url' ? (
+          <input type="url" className="form-control" placeholder="Imagen (URL)" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} required />
+        ) : (
           <input type="file" className="form-control" onChange={(e) => e.target.files && setImageFile(e.target.files[0])} required />
-        </div>
-      )}
+        )}
+      </div>
+    </div>
 
-      <button type="submit" className="btn btn-primary">Guardar</button>
+    <button type="submit" className="btn btn-primary mt-3">Guardar</button>
+    {status && <p className="mt-2">{status}</p>}
+  </form>
+);
 
-      {status && <p className="mt-3">{status}</p>}
-    </form>
-  );
 }
