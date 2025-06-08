@@ -1,0 +1,29 @@
+.artifact-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  align-items: start;
+  justify-content: flex-start;
+}
+
+.artifact-form input,
+.artifact-form button,
+.artifact-form .radio-group {
+  min-width: 150px;
+  flex-grow: 1;
+}
+
+.radio-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.status-text {
+  width: 100%;
+  margin-top: 0.5rem;
+  color: #666;
+}
