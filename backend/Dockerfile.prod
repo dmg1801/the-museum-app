@@ -1,13 +1,23 @@
-FROM node:18
+# Usa Node 20 porque varias dependencias lo requieren
+FROM node:20
 
+# Crea y entra en el directorio de la app
 WORKDIR /app
 
+# Copia los archivos de dependencias
 COPY package*.json ./
-RUN npm install --production
 
+# Instala el CLI de Nest globalmente y dependencias de producción
+RUN npm install -g @nestjs/cli && npm install --omit=dev
+
+# Copia el resto del código fuente
 COPY . .
-RUN npm run build
 
+# Compila el proyecto
+RUN nest build
+
+# Expone el puerto 3001 (API)
 EXPOSE 3001
 
+# Comando para producción
 CMD ["npm", "run", "start:prod"]
