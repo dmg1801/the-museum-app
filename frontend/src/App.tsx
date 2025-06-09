@@ -15,11 +15,13 @@ export type Artifact = {
 };
 
 function App() {
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const [selectedArtifact, setSelectedArtifact] = useState<Artifact | null>(null);
   const [artifacts, setArtifacts] = useState<Artifact[]>([]);
 
   const fetchArtifacts = async () => {
-    const res = await axios.get('http://localhost:3001/artifacts');
+    const res = await axios.get(`${apiUrl}/artifacts`);
     setArtifacts(res.data);
   };
 
