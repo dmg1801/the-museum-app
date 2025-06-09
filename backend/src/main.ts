@@ -6,8 +6,20 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.enableCors({
-  origin: 'http://localhost:3000',
+ const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000', // si también lo usas a veces
+  'https://themuseummap.net', // para producción
+];
+
+app.enableCors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 });
 
