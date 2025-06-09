@@ -35,7 +35,11 @@ export default function ArtifactMapLeaflet({ artifacts, onEdit }: Props) {
   useEffect(() => {
     axios
       .get(`${apiUrl}/artifacts`)
-      .then((res) => setLocalArtifacts(res.data))
+      .then((res) => {
+         console.log('🚀 Respuesta del backend:', res.data);
+        setLocalArtifacts(res.data)
+      }
+      )
       .catch((err) => console.error('Error loading artifacts:', err));
   }, [artifacts]);
 
