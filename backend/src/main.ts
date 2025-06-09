@@ -10,6 +10,7 @@ async function bootstrap() {
   'http://localhost:5173',
   'http://localhost:3000', // si también lo usas a veces
   'https://themuseummap.net', // para producción
+  'http://themuseummap.net',
 ];
 
 app.enableCors({
