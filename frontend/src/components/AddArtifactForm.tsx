@@ -1,10 +1,11 @@
-// AddArtifactForm.tsx
+// Adaptación parchment-theme de AddArtifactForm
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-
-import './AddArtifactForm.css'; // Asegúrate de tener este CSS
+import './AddArtifactForm.css';
 import type { Artifact } from '../App';
+
+import { Form, Button, Row, Col } from 'react-bootstrap';
 
 type FormArtifact = Omit<Artifact, 'id'> & { id?: number };
 
@@ -88,23 +89,104 @@ export default function AddArtifactForm({ selectedArtifact, onClear, onRefresh }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="artifact-form">
-      <input type="text" placeholder="Nombre" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
-      <input type="text" placeholder="Descripción" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} required />
-      <input type="number" placeholder="Latitud" value={formData.latitude} onChange={(e) => setFormData({ ...formData, latitude: parseFloat(e.target.value) })} required />
-      <input type="number" placeholder="Longitud" value={formData.longitude} onChange={(e) => setFormData({ ...formData, longitude: parseFloat(e.target.value) })} required />
-      <div className="radio-group">
-        <label><input type="radio" checked={imageSource === 'url'} onChange={() => setImageSource('url')} /> URL</label>
-        <label><input type="radio" checked={imageSource === 'file'} onChange={() => setImageSource('file')} /> Archivo</label>
-      </div>
+    <Form onSubmit={handleSubmit} className="decorated-box">
+      <Form.Group className="mb-2">
+        <Form.Label>Nombre</Form.Label>
+        <Form.Control
+          type="text"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          required
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-2">
+        <Form.Label>Descripción</Form.Label>
+        <Form.Control
+          type="text"
+          value={formData.description}
+          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+          required
+        />
+      </Form.Group>
+
+      <Row>
+        <Col>
+          <Form.Group className="mb-2">
+            <Form.Label>Latitud</Form.Label>
+            <Form.Control
+              type="number"
+              value={formData.latitude}
+              onChange={(e) => setFormData({ ...formData, latitude: parseFloat(e.target.value) })}
+              required
+            />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group className="mb-2">
+            <Form.Label>Longitud</Form.Label>
+            <Form.Control
+              type="number"
+              value={formData.longitude}
+              onChange={(e) => setFormData({ ...formData, longitude: parseFloat(e.target.value) })}
+              required
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+
+      <Form.Group className="mb-2">
+        <Form.Check
+          inline
+          label="URL"
+          name="imageSource"
+          type="radio"
+          checked={imageSource === 'url'}
+          onChange={() => setImageSource('url')}
+        />
+        <Form.Check
+          inline
+          label="Archivo"
+          name="imageSource"
+          type="radio"
+          checked={imageSource === 'file'}
+          onChange={() => setImageSource('file')}
+        />
+      </Form.Group>
+
       {imageSource === 'url' ? (
-        <input type="url" placeholder="Imagen (URL)" value={formData.imageUrl} onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })} />
+        <Form.Group className="mb-2">
+          <Form.Control
+            type="url"
+            placeholder="Imagen (URL)"
+            value={formData.imageUrl}
+            onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+          />
+        </Form.Group>
       ) : (
-        <input type="file" onChange={(e) => e.target.files && setImageFile(e.target.files[0])} />
+        <Form.Group className="mb-2">
+          <Form.Control
+            type="file"
+            onChange={(e) => {
+              const target = e.target as HTMLInputElement;
+              if (target.files?.length) {
+                setImageFile(target.files[0]);
+              }
+            }}
+          />
+
+        </Form.Group>
       )}
-      <button type="submit">{selectedArtifact?.id ? 'Actualizar' : 'Guardar'}</button>
-      {selectedArtifact && <button type="button" onClick={onClear}>Cancelar</button>}
-      {status && <p className="status-text">{status}</p>}
-    </form>
+
+      <Button type="submit" variant="primary" className="w-100">
+        {selectedArtifact?.id ? 'Actualizar' : 'Guardar'}
+      </Button>
+      {selectedArtifact && (
+        <Button type="button" variant="secondary" className="w-100 mt-2" onClick={onClear}>
+          Cancelar
+        </Button>
+      )}
+      {status && <p className="mt-2 status-text">{status}</p>}
+    </Form>
   );
 }

@@ -1,0 +1,75 @@
+/* parchment-theme.css */
+
+:root {
+  --bg-paper: #f4e2c0;
+  --border-dark: #5c3b1a;
+  --text-dark: #3a2a16;
+  --highlight: #c57d56;
+}
+
+body {
+  background-color: var(--bg-paper);
+  background-image: url('/textures/parchment.png');
+  background-size: cover;
+  background-attachment: fixed;
+  color: var(--text-dark);
+  font-family: 'Cinzel', serif;
+}
+
+h1, h2, h3, .navbar-brand {
+  font-family: 'Cinzel', serif;
+  text-transform: uppercase;
+  color: var(--text-dark);
+}
+
+.card, .form-control, .navbar, .btn {
+  background-color: var(--bg-paper) !important;
+  border: 2px solid var(--border-dark);
+  color: var(--text-dark);
+}
+
+.btn-primary {
+  background-color: var(--highlight);
+  border-color: var(--border-dark);
+  color: white;
+}
+
+.navbar {
+  border-bottom: 3px double var(--border-dark);
+}
+
+.decorated-box {
+  border: 3px double var(--border-dark);
+  padding: 1rem;
+  box-shadow: 4px 4px 0px var(--border-dark);
+}
+
+/* Form and map layout adjustments */
+.form-control:focus {
+  box-shadow: none;
+  border-color: var(--highlight);
+}
+
+.nav-tabs .nav-link.active {
+  background-color: var(--highlight);
+  border-color: var(--border-dark) var(--border-dark) var(--highlight);
+  color: white;
+}
+
+.nav-tabs .nav-link {
+  color: var(--text-dark);
+}
+
+/* Optional: custom scroll styling for sidebar */
+.overflow-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+  background-color: var(--border-dark);
+  border-radius: 4px;
+}
+
+.overflow-auto::-webkit-scrollbar-track {
+  background-color: var(--bg-paper);
+}
