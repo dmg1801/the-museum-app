@@ -1,5 +1,4 @@
 import * as Express from 'express';
-
 import {
   Controller,
   Get,
@@ -11,7 +10,9 @@ import {
   NotFoundException,
   UploadedFile,
   UseInterceptors,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { ArtifactsService } from './artifacts.service';
 import { Artifact } from './artifact.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -53,20 +54,23 @@ export class ArtifactsController {
   }
 
   @Post('upload')
-@UseInterceptors(FileInterceptor('file', {
-  storage: diskStorage({
-    destination: './uploads',
-    filename: (req, file, cb) => {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-      const ext = extname(file.originalname);
-      cb(null, `artifact-${uniqueSuffix}${ext}`);
-    }
-  })
-}))
-uploadImage(@UploadedFile() file: any) {
-  return {
-    imageUrl: `http://localhost:3001/uploads/${file.filename}`,
-  };
-}
-
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (req, file, cb) => {
+          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+          const ext = extname(file.originalname);
+          cb(null, `artifact-${uniqueSuffix}${ext}`);
+        },
+      }),
+    }),
+  )
+  uploadImage(@UploadedFile() file: any, @Req() req: Request) {
+    const host = req.get('host');
+    const protocol = req.protocol;
+    return {
+      imageUrl: `${protocol}://${host}/uploads/${file.filename}`,
+    };
+  }
 }
