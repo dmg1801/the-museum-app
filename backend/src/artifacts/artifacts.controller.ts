@@ -1,3 +1,5 @@
+import * as Express from 'express';
+
 import {
   Controller,
   Get,
@@ -61,7 +63,7 @@ export class ArtifactsController {
     }
   })
 }))
-uploadImage(@UploadedFile() file: Express.Multer.File) {
+uploadImage(@UploadedFile() file: any) {
   return {
     imageUrl: `http://localhost:3001/uploads/${file.filename}`,
   };
