@@ -28,11 +28,13 @@ type Props = {
 };
 
 export default function ArtifactMapLeaflet({ artifacts, onEdit }: Props) {
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const [localArtifacts, setLocalArtifacts] = useState<Artifact[]>([]);
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/artifacts')
+      .get(`${apiUrl}/artifacts`)
       .then((res) => setLocalArtifacts(res.data))
       .catch((err) => console.error('Error loading artifacts:', err));
   }, [artifacts]);
@@ -40,7 +42,7 @@ export default function ArtifactMapLeaflet({ artifacts, onEdit }: Props) {
   const handleDelete = async (id: number) => {
     if (!confirm('¿Estás seguro de que quieres eliminar esta pieza?')) return;
     try {
-      await axios.delete(`http://localhost:3001/artifacts/${id}`);
+      await axios.delete(`${apiUrl}/artifacts/${id}`);
       setLocalArtifacts((prev) => prev.filter((a) => a.id !== id));
     } catch (err) {
       console.error('Error eliminando artifact:', err);

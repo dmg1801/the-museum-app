@@ -16,6 +16,7 @@ type Props = {
 };
 
 export default function AddArtifactForm({ selectedArtifact, onClear, onRefresh }: Props) {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [formData, setFormData] = useState<FormArtifact>({
     name: '',
     description: '',
@@ -51,7 +52,7 @@ export default function AddArtifactForm({ selectedArtifact, onClear, onRefresh }
       upload.append('file', imageFile);
 
       try {
-        const res = await axios.post('http://localhost:3001/artifacts/upload', upload, {
+        const res = await axios.post( `${apiUrl}/artifacts/upload`, upload, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         finalImageUrl = res.data.imageUrl;
@@ -72,10 +73,10 @@ export default function AddArtifactForm({ selectedArtifact, onClear, onRefresh }
 
     try {
       if (selectedArtifact?.id) {
-        await axios.put(`http://localhost:3001/artifacts/${selectedArtifact.id}`, payload);
+        await axios.put(`${apiUrl}/artifacts/${selectedArtifact.id}`, payload);
         setStatus('Pieza actualizada');
       } else {
-        await axios.post('http://localhost:3001/artifacts', payload);
+        await axios.post(`${apiUrl}/artifacts`, payload);
         setStatus('Pieza creada');
       }
       setFormData({ name: '', description: '', latitude: 0, longitude: 0, imageUrl: '' });

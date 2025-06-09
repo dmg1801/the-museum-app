@@ -15,10 +15,12 @@ type Artifact = {
 };
 
 export default function ArtifactMap() {
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const [artifacts, setArtifacts] = useState<Artifact[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/artifacts')
+    axios.get(`${apiUrl}/artifacts`)
       .then(res => setArtifacts(res.data))
       .catch(err => console.error(err));
   }, []);
