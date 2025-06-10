@@ -67,10 +67,10 @@ export class ArtifactsController {
     }),
   )
   uploadImage(@UploadedFile() file: any, @Req() req: Request) {
-    const host = req.get('host');
+    const host = process.env.HOST_URL || `${req.protocol}://${req.get('host')}`;
     const protocol = req.protocol;
     return {
-      imageUrl: `${protocol}://${host}/uploads/${file.filename}`,
+      imageUrl: `${host}/uploads/${file.filename}`,
     };
   }
 }
