@@ -25,9 +25,11 @@ type Artifact = {
 type Props = {
   artifacts: Artifact[];
   onEdit: (artifact: Artifact) => void;
+  isAdmin: boolean;
 };
 
-export default function ArtifactMapLeaflet({ artifacts, onEdit }: Props) {
+
+export default function ArtifactMapLeaflet({ artifacts, onEdit, isAdmin }: Props) {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const [localArtifacts, setLocalArtifacts] = useState<Artifact[]>([]);
@@ -78,17 +80,19 @@ export default function ArtifactMapLeaflet({ artifacts, onEdit }: Props) {
             position={[artifact.latitude, artifact.longitude]}
           >
             <Popup minWidth={200}>
-              <div>
-                <strong>{artifact.name}</strong>
-                <br />
-                {artifact.imageUrl && (
-                  <img
-                    src={artifact.imageUrl}
-                    alt={artifact.name}
-                    style={{ width: '100px', marginTop: '5px' }}
-                  />
-                )}
-                <p style={{ margin: '0.5rem 0' }}>{artifact.description}</p>
+            <div>
+              <strong>{artifact.name}</strong>
+              <br />
+              {artifact.imageUrl && (
+                <img
+                  src={artifact.imageUrl}
+                  alt={artifact.name}
+                  style={{ width: '100px', marginTop: '5px' }}
+                />
+              )}
+              <p style={{ margin: '0.5rem 0' }}>{artifact.description}</p>
+
+              {isAdmin && (
                 <div className="d-flex justify-content-between">
                   <button
                     className="btn btn-sm btn-outline-danger"
@@ -103,8 +107,10 @@ export default function ArtifactMapLeaflet({ artifacts, onEdit }: Props) {
                     Editar
                   </button>
                 </div>
-              </div>
-            </Popup>
+              )}
+            </div>
+          </Popup>
+
           </Marker>
         ))}
       </MapContainer>

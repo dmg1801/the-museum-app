@@ -73,3 +73,21 @@ h1, h2, h3, .navbar-brand {
 .overflow-auto::-webkit-scrollbar-track {
   background-color: var(--bg-paper);
 }
+
+@media (max-width: 768px) {
+  /* .decorated-box {
+    padding: 1rem !important;
+  } */
+
+  #map {
+    height: 60vh !important; /* o lo que prefieras */
+  }
+}
+
+.adventure-header {
+  font-family: 'Cinzel', serif;
+  border-bottom: 2px solid goldenrod;
+  background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
+  background-size: cover;
+}
+
