@@ -19,7 +19,7 @@ function App() {
   const [selectedArtifact, setSelectedArtifact] = useState<Artifact | null>(null);
   const [artifacts, setArtifacts] = useState<Artifact[]>([]);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [showLogin, setShowLogin] = useState<boolean>(true);
+
 
   const fetchArtifacts = async () => {
     const res = await axios.get(`${apiUrl}/artifacts`);
@@ -33,7 +33,7 @@ function App() {
   const handleLogin = (password: string) => {
     if (password === import.meta.env.VITE_ADMIN_PASSWORD) {
       setIsAdmin(true);
-      setShowLogin(false);
+
     } else {
       alert('Contraseña incorrecta');
     }
@@ -48,14 +48,14 @@ function App() {
         <h3 className="m-0 fw-bold">🗺️ Mapa de Tesoros Arqueológicos</h3>
         <small className="text-light">Explora y descubre piezas del pasado alrededor del mundo</small>
         {!isAdmin && (
-  <button
-    className="btn btn-outline-light position-absolute"
-    style={{ top: '1rem', right: '1rem', zIndex: 1050 }}
-    data-bs-toggle="modal"
-    data-bs-target="#adminLoginModal"
-  >
-    🔐 Ingresar como administrador
-  </button>
+      <button
+        className="btn btn-outline-light position-absolute"
+        style={{ top: '1rem', right: '1rem', zIndex: 1050 }}
+        data-bs-toggle="modal"
+        data-bs-target="#adminLoginModal"
+      >
+        🔐 admin
+      </button>
 )}
 
 {/* Modal de Login */}
