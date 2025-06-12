@@ -31,7 +31,7 @@ function App() {
   }, []);
 
   const handleLogin = (password: string) => {
-    if (password === import.meta.env.VITE_ADMIN_PASSWORD) {
+    if (password === "admin123") {
       setIsAdmin(true);
 
     } else {
