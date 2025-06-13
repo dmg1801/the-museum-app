@@ -16,3 +16,6 @@ frontend/.vite-temp
 
 # Environments
 **/.env
+
+#uploads
+uploads/
