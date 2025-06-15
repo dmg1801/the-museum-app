@@ -25,9 +25,10 @@ type Artifact = {
 type Props = {
   artifacts: Artifact[];
   onEdit: (artifact: Artifact) => void;
+  isAdmin: boolean;
 };
 
-export default function ArtifactMapLeaflet({ artifacts, onEdit }: Props) {
+export default function ArtifactMapLeaflet({ artifacts, onEdit, isAdmin }: Props) {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const [localArtifacts, setLocalArtifacts] = useState<Artifact[]>([]);
@@ -90,18 +91,22 @@ export default function ArtifactMapLeaflet({ artifacts, onEdit }: Props) {
                 )}
                 <p style={{ margin: '0.5rem 0' }}>{artifact.description}</p>
                 <div className="d-flex justify-content-between">
-                  <button
-                    className="btn btn-sm btn-outline-danger"
-                    onClick={() => handleDelete(artifact.id)}
-                  >
-                    Eliminar
-                  </button>
-                  <button
-                    className="btn btn-sm btn-outline-secondary"
-                    onClick={() => onEdit(artifact)}
-                  >
-                    Editar
-                  </button>
+                  {isAdmin && (
+                    <>
+                      <button
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={() => handleDelete(artifact.id)}
+                      >
+                      Eliminar
+                      </button>
+                      <button
+                      className="btn btn-sm btn-outline-secondary"
+                      onClick={() => onEdit(artifact)}
+                      >
+                        Editar
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </Popup>
