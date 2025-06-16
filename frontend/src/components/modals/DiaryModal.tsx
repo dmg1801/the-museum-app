@@ -1,5 +1,4 @@
 // Modal.tsx
-import { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import './ArtifactModal.css';
 
@@ -18,7 +17,7 @@ interface ArtifactModalProps {
   onDelete?: () => void;
 }
 
-export function DiaryModal({ show, onClose, artifact, onEdit, onDelete }: ArtifactModalProps) {
+export function DiaryModal({ show, onClose, artifact }: ArtifactModalProps) {
   return (
     <Modal show={show} onHide={onClose} size="lg" centered dialogClassName="artifact-modal">
       <div className="diary-container">
