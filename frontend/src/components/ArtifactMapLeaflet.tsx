@@ -1,17 +1,12 @@
-// ArtifactMapLeaflet corregido (tiles OpenStreetMap)
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import axios from 'axios';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { DiaryModal } from './modals/DiaryModal';
 
-// Corrige íconos de Leaflet
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-});
+
+// ... (íconos Leaflet como ya tienes)
 
 type Artifact = {
   id: number;
@@ -20,6 +15,9 @@ type Artifact = {
   latitude: number;
   longitude: number;
   imageUrl: string;
+  civilization?: string;
+  age?: string;
+  origin?: string;
 };
 
 type Props = {
@@ -32,15 +30,16 @@ export default function ArtifactMapLeaflet({ artifacts, onEdit, isAdmin }: Props
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const [localArtifacts, setLocalArtifacts] = useState<Artifact[]>([]);
+  const [selectedArtifact, setSelectedArtifact] = useState<Artifact | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     axios
       .get(`${apiUrl}/artifacts`)
       .then((res) => {
-         console.log('🚀 Respuesta del backend:', res.data);
-        setLocalArtifacts(res.data)
-      }
-      )
+        console.log('🚀 Respuesta del backend:', res.data);
+        setLocalArtifacts(res.data);
+      })
       .catch((err) => console.error('Error loading artifacts:', err));
   }, [artifacts]);
 
@@ -49,10 +48,21 @@ export default function ArtifactMapLeaflet({ artifacts, onEdit, isAdmin }: Props
     try {
       await axios.delete(`${apiUrl}/artifacts/${id}`);
       setLocalArtifacts((prev) => prev.filter((a) => a.id !== id));
+      setShowModal(false);
     } catch (err) {
       console.error('Error eliminando artifact:', err);
       alert('Error al eliminar la pieza');
     }
+  };
+
+  const openModal = (artifact: Artifact) => {
+    setSelectedArtifact(artifact);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setSelectedArtifact(null);
+    setShowModal(false);
   };
 
   return (
@@ -78,7 +88,7 @@ export default function ArtifactMapLeaflet({ artifacts, onEdit, isAdmin }: Props
             key={artifact.id}
             position={[artifact.latitude, artifact.longitude]}
           >
-            <Popup minWidth={200}>
+            <Popup minWidth={100}>
               <div>
                 <strong>{artifact.name}</strong>
                 <br />
@@ -89,19 +99,24 @@ export default function ArtifactMapLeaflet({ artifacts, onEdit, isAdmin }: Props
                     style={{ width: '100px', marginTop: '5px' }}
                   />
                 )}
-                <p style={{ margin: '0.5rem 0' }}>{artifact.description}</p>
-                <div className="d-flex justify-content-between">
+                <div className="d-flex justify-content-between mt-2">
+                  <button
+                    className="btn btn-sm btn-primary"
+                    onClick={() => openModal(artifact)}
+                  >
+                    Ver historia
+                  </button>
                   {isAdmin && (
                     <>
                       <button
-                      className="btn btn-sm btn-outline-danger"
-                      onClick={() => handleDelete(artifact.id)}
+                        className="btn btn-sm btn-outline-danger"
+                        onClick={() => handleDelete(artifact.id)}
                       >
-                      Eliminar
+                        Eliminar
                       </button>
                       <button
-                      className="btn btn-sm btn-outline-secondary"
-                      onClick={() => onEdit(artifact)}
+                        className="btn btn-sm btn-outline-secondary"
+                        onClick={() => onEdit(artifact)}
                       >
                         Editar
                       </button>
@@ -113,6 +128,26 @@ export default function ArtifactMapLeaflet({ artifacts, onEdit, isAdmin }: Props
           </Marker>
         ))}
       </MapContainer>
+
+      {selectedArtifact && (
+        <DiaryModal
+          show={showModal}
+          onClose={closeModal}
+          artifact={{
+            title: selectedArtifact.name,
+            imageUrl: selectedArtifact.imageUrl,
+            civilization: selectedArtifact.civilization || 'Desconocida',
+            age: selectedArtifact.age || 'N/A',
+            origin: selectedArtifact.origin || 'Desconocido',
+            description: selectedArtifact.description,
+          }}
+          onEdit={() => {
+            onEdit(selectedArtifact);
+            closeModal();
+          }}
+          onDelete={() => handleDelete(selectedArtifact.id)}
+        />
+      )}
     </div>
   );
 }

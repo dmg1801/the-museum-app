@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Artifact {
@@ -8,15 +8,24 @@ export class Artifact {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ type: 'text' })
   description: string;
-
-  @Column({ nullable: true })
-  imageUrl: string;
 
   @Column('float')
   latitude: number;
 
   @Column('float')
   longitude: number;
+
+  @Column()
+  imageUrl: string;
+
+  @Column({ nullable: true })
+  civilization?: string;
+
+  @Column({ nullable: true })
+  age?: string;
+
+  @Column({ nullable: true })
+  origin?: string;
 }

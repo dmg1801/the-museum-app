@@ -13,6 +13,9 @@ export type Artifact = {
   latitude: number;
   longitude: number;
   imageUrl: string;
+  civilization?: string;
+  age?: string;
+  origin?: string;
 };
 
 function App() {

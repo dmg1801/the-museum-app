@@ -69,6 +69,9 @@ export default function AddArtifactForm({ selectedArtifact, onClear, onRefresh }
       latitude: formData.latitude,
       longitude: formData.longitude,
       imageUrl: finalImageUrl,
+      civilization: formData.civilization,
+      age: formData.age,
+      origin: formData.origin,
     };
 
     try {
@@ -104,10 +107,38 @@ export default function AddArtifactForm({ selectedArtifact, onClear, onRefresh }
       <Form.Group className="mb-2">
         <Form.Label>Descripción</Form.Label>
         <Form.Control
-          type="text"
+          as="textarea"
+          rows={4}
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           required
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-2">
+        <Form.Label>Civilización</Form.Label>
+        <Form.Control
+          type="text"
+          value={formData.civilization || ''}
+          onChange={(e) => setFormData({ ...formData, civilization: e.target.value })}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-2">
+        <Form.Label>Antigüedad (siglos / años)</Form.Label>
+        <Form.Control
+          type="text"
+          value={formData.age || ''}
+          onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-2">
+        <Form.Label>Lugar de origen</Form.Label>
+        <Form.Control
+          type="text"
+          value={formData.origin || ''}
+          onChange={(e) => setFormData({ ...formData, origin: e.target.value })}
         />
       </Form.Group>
 
@@ -175,19 +206,21 @@ export default function AddArtifactForm({ selectedArtifact, onClear, onRefresh }
               }
             }}
           />
-
         </Form.Group>
       )}
 
       <Button type="submit" variant="primary" className="w-100">
         {selectedArtifact?.id ? 'Actualizar' : 'Guardar'}
       </Button>
+
       {selectedArtifact && (
         <Button type="button" variant="secondary" className="w-100 mt-2" onClick={onClear}>
           Cancelar
         </Button>
       )}
-      {status && <p className="mt-2 status-text">{status}</p>}
-    </Form>
+
+    {status && <p className="mt-2 status-text">{status}</p>}
+  </Form>
+
   );
 }

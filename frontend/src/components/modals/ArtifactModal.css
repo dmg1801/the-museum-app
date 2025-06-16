@@ -1,0 +1,59 @@
+.artifact-modal .modal-content {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.diary-container {
+  background-image: url('/diario-aventurero.png'); /* Asegúrate de que esté en public/ */
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 35rem;
+  display: flex;
+  flex-direction: column;
+  padding: 4rem;
+  font-family: 'Georgia', serif;
+}
+
+.diary-page {
+  display: flex;
+  flex: 1;
+  gap: 4em;
+  overflow: hidden;
+}
+
+.left-page {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-right: 1rem;
+}
+
+.left-page img.artifact-img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+  border: 2px solid #8b5e3c;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.right-page {
+  width: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.description-scroll {
+  max-height: 100%;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.button-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}

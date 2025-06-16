@@ -14,7 +14,7 @@ import { ArtifactsModule } from './artifacts/artifacts.module';
       password: 'postgres',
       database: 'arqueodb',
       entities: [Artifact],
-      synchronize: true, // solo en desarrollo
+      synchronize: false, // solo en desarrollo
       autoLoadEntities: true,
     }),
     ArtifactsModule,
