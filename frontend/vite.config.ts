@@ -6,6 +6,14 @@ export default defineConfig(({ mode }) => {
   return {
     base: '/',
     plugins: [react()],
+    build: {
+    sourcemap: false, // ⛔ No generar sourcemaps en producción
+    },
+    css: {
+    postcss: {
+      map: false // 🔥 esto es clave
+    }
+    },
     server: {
       watch: {
         usePolling: true,

@@ -14,7 +14,8 @@ RUN npm install -g @nestjs/cli && npm install --omit=dev
 COPY . .
 
 # Compila el proyecto
-RUN nest build
+# RUN nest build
+RUN npm run build
 
 # Expone el puerto 3001 (API)
 EXPOSE 3001
