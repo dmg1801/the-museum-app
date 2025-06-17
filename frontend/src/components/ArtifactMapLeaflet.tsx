@@ -32,6 +32,13 @@ export default function ArtifactMapLeaflet({ artifacts, onEdit, isAdmin }: Props
   const [localArtifacts, setLocalArtifacts] = useState<Artifact[]>([]);
   const [selectedArtifact, setSelectedArtifact] = useState<Artifact | null>(null);
   const [showModal, setShowModal] = useState(false);
+  
+
+  const compassIcon = new L.Icon({
+    iconUrl: '/marker-compass.png',
+    iconSize: [40, 40], // Ajusta según el tamaño real del ícono
+    popupAnchor: [0, -10], // Dónde se posiciona el popup relativo al ícono
+  });
 
   useEffect(() => {
     axios
@@ -87,10 +94,11 @@ export default function ArtifactMapLeaflet({ artifacts, onEdit, isAdmin }: Props
           <Marker
             key={artifact.id}
             position={[artifact.latitude, artifact.longitude]}
+            icon={compassIcon}
           >
-            <Popup minWidth={100}>
-              <div>
-                <strong>{artifact.name}</strong>
+            <Popup minWidth={100} className="popup-pergamino">
+              <div className="popup-pergamino">
+                <strong className="cinzel-text">{artifact.name}</strong>
                 <br />
                 {artifact.imageUrl && (
                   <img
@@ -104,7 +112,7 @@ export default function ArtifactMapLeaflet({ artifacts, onEdit, isAdmin }: Props
                     className="btn btn-sm btn-primary"
                     onClick={() => openModal(artifact)}
                   >
-                    Ver historia
+                    Historia
                   </button>
                   {isAdmin && (
                     <>

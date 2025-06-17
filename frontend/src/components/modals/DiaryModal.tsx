@@ -1,5 +1,4 @@
 // Modal.tsx
-import { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import './ArtifactModal.css';
 
@@ -18,14 +17,14 @@ interface ArtifactModalProps {
   onDelete?: () => void;
 }
 
-export function DiaryModal({ show, onClose, artifact, onEdit, onDelete }: ArtifactModalProps) {
+export function DiaryModal({ show, onClose, artifact }: ArtifactModalProps) {
   return (
     <Modal show={show} onHide={onClose} size="lg" centered dialogClassName="artifact-modal">
       <div className="diary-container">
         <div className="diary-page">
           <div className="left-page">
             <img src={artifact.imageUrl} alt={artifact.title} className="artifact-img" />
-            <h3>{artifact.title}</h3>
+            <h5>{artifact.title}</h5>
             <p><strong>Civilización:</strong> {artifact.civilization}</p>
             <p><strong>Antigüedad:</strong> {artifact.age}</p>
             <p><strong>Lugar de origen:</strong> {artifact.origin}</p>
@@ -36,9 +35,7 @@ export function DiaryModal({ show, onClose, artifact, onEdit, onDelete }: Artifa
             </div>
           </div>
         </div>
-        <div className="button-bar">
-          {/* {onEdit && <Button variant="warning" onClick={onEdit}>Editar</Button>}
-          {onDelete && <Button variant="danger" onClick={onDelete}>Eliminar</Button>} */}
+        <div className="button-bar">  
           <Button variant="secondary" onClick={onClose}>Cerrar</Button>
         </div>
       </div>

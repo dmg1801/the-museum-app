@@ -20,6 +20,7 @@ services:
       - "3001"
     volumes:
       - ./backend/uploads:/app/uploads
+      - ./backend/.env.production:/app/.env.production 
     environment:
       - DATABASE_URL=postgres://postgres:postgres@db:5432/arqueodb
     depends_on:
