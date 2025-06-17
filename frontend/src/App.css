@@ -40,3 +40,16 @@
 .read-the-docs {
   color: #888;
 }
+
+/* En tu archivo CSS principal o en el módulo */
+.popup-pergamino {
+  background-image: url('/pergamino.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 10px;
+  border: 2px solid #5a3e1b;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  font-family: 'Cinzel', serif;
+  color: #3e2f1c;
+}

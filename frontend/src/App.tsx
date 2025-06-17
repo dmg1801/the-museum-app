@@ -41,11 +41,11 @@ function App() {
       <h5 className="mb-0">🗺️ The Museum Map</h5>
       {!isAdmin ? (
         <button className="btn btn-outline-light btn-sm" onClick={() => setShowLoginModal(true)}>
-          Entrar como Administrador
+          Login
         </button>
       ) : (
         <button className="btn btn-outline-warning btn-sm" onClick={() => setIsAdmin(false)}>
-          Salir del Modo Admin
+          Logout
         </button>
       )}
     </div>

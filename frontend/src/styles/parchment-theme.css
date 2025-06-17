@@ -31,7 +31,9 @@ h1, h2, h3, .navbar-brand {
 .btn-primary {
   background-color: var(--highlight);
   border-color: var(--border-dark);
-  color: white;
+  color: rgb(46, 35, 35);
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
 }
 
 .navbar {
