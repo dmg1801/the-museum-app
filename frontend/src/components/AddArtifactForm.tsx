@@ -92,6 +92,34 @@ export default function AddArtifactForm({ selectedArtifact, onClear, onRefresh }
     }
   };
 
+  function dmsToDecimal(deg: number, min: number, sec: number, dir: string): number {
+  let decimal = deg + min / 60 + sec / 3600;
+  if (['S', 'W'].includes(dir.toUpperCase())) decimal *= -1;
+  return decimal;
+}
+
+function handleCombinedInput(input: string) {
+  const dmsRegex = /(\d+)[°:\s](\d+)[′'](\d+)[″"]?\s*([NSEW])/gi;
+  const decimalRegex = /-?\d+(\.\d+)?/g;
+
+  const matches = input.match(dmsRegex);
+  const decimals = input.match(decimalRegex)?.map(Number);
+
+  if (matches && matches.length >= 2) {
+    const latMatch = dmsRegex.exec(input);
+    const lngMatch = dmsRegex.exec(input);
+
+    if (latMatch && lngMatch) {
+      const lat = dmsToDecimal(+latMatch[1], +latMatch[2], +latMatch[3], latMatch[4]);
+      const lng = dmsToDecimal(+lngMatch[1], +lngMatch[2], +lngMatch[3], lngMatch[4]);
+      setFormData({ ...formData, latitude: lat, longitude: lng });
+    }
+  } else if (decimals && decimals.length >= 2) {
+    setFormData({ ...formData, latitude: decimals[0], longitude: decimals[1] });
+  }
+}
+
+
   return (
     <Form onSubmit={handleSubmit} className="decorated-box">
       <Form.Group className="mb-2">
@@ -142,30 +170,38 @@ export default function AddArtifactForm({ selectedArtifact, onClear, onRefresh }
         />
       </Form.Group>
 
-      <Row>
+      <Form.Group className="mb-2">
+        <Form.Label>Coordenadas combinadas (DMS o decimal)</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Ej: 29°58′45″N 31°08′03″E o 29.979167, 31.134167"
+          onChange={(e) => handleCombinedInput(e.target.value)}
+        />
+      </Form.Group>
+
+      <Row className="mb-2">
         <Col>
-          <Form.Group className="mb-2">
-            <Form.Label>Latitud</Form.Label>
-            <Form.Control
-              type="number"
-              value={formData.latitude}
-              onChange={(e) => setFormData({ ...formData, latitude: parseFloat(e.target.value) })}
-              required
-            />
-          </Form.Group>
+          <Form.Label>Latitud (N)</Form.Label>
+          <Form.Control
+            type="number"
+            value={formData.latitude}
+            onChange={(e) =>
+              setFormData({ ...formData, latitude: parseFloat(e.target.value) })
+            }
+          />
         </Col>
         <Col>
-          <Form.Group className="mb-2">
-            <Form.Label>Longitud</Form.Label>
-            <Form.Control
-              type="number"
-              value={formData.longitude}
-              onChange={(e) => setFormData({ ...formData, longitude: parseFloat(e.target.value) })}
-              required
-            />
-          </Form.Group>
+          <Form.Label>Longitud (O)</Form.Label>
+          <Form.Control
+            type="number"
+            value={formData.longitude}
+            onChange={(e) =>
+              setFormData({ ...formData, longitude: parseFloat(e.target.value) })
+            }
+          />
         </Col>
       </Row>
+
 
       <Form.Group className="mb-2">
         <Form.Check
