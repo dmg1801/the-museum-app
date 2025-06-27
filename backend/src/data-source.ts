@@ -12,6 +12,7 @@ dotenvFlow.config(); // Carga automáticamente .env, .env.development, etc.
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
+  url: process.env.DATABASE_URL,
   host: process.env.POSTGRES_HOST || 'db',
   port: parseInt(process.env.POSTGRES_PORT || '5432'),
   username: process.env.POSTGRES_USER,
