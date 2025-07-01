@@ -107,7 +107,7 @@ export default function ArtifactMapLeaflet({ artifacts, onEdit, isAdmin }: Props
                     style={{ width: '100px', marginTop: '5px' }}
                   />
                 )}
-                <div className="d-flex justify-content-between mt-2">
+                <div className="d-flex justify-content-center mt-2">
                   <button
                     className="btn btn-sm btn-primary"
                     onClick={() => openModal(artifact)}
